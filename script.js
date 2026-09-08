@@ -15,36 +15,33 @@
 
 const letters = [
   {
-    person: "PERSON 01",
+    person: "Mom",
     date: "SEPTEMBER 2026",
-    song: "SONG TITLE",
-    artist: "ARTIST NAME",
-    spotifyId: "PLACEHOLDER",
-    keywords: "person 01 placeholder letter",
-    preview: "A little preview of what this letter contains...",
-    text: `Dear Person 01,
+    song: "Marjorie",
+    artist: "Taylor Swift",
+    spotifyId: "12ntTeqEeTg7GAVpe8Mhpl",
+    keywords: "motherr, rts, patience",
+    preview: "can't imagine how much patience you hold",
+    text: `Dear Mami,
 
-[WRITE YOUR LETTER HERE]
+I might be as irascible as father is sometimes but I swear that I am working on it. I'm in the process of becoming your doctor and it'll take a while, I hope you can wait. I can't help but emtoional when I see you age and get weaker by the day.
 
-This is where your actual letter goes. You can write as much as you want.
 
-— me`
+— Chiki`
   },
   {
-    person: "PERSON 02",
+    person: "Dad",
     date: "SEPTEMBER 2026",
-    song: "SONG TITLE",
-    artist: "ARTIST NAME",
-    spotifyId: "PLACEHOLDER",
-    keywords: "person 02 placeholder letter",
-    preview: "A little preview of what this letter contains...",
-    text: `Dear Person 02,
+    song: "this is me trying",
+    artist: "Taylor Swift",
+    spotifyId: "7kt9e9LFSpN1zQtYEl19o1",
+    keywords: "mad, father, game, gaming",
+    preview: "you failed to end the cycle",
+    text: `Dear Dadi,
 
-[WRITE YOUR LETTER HERE]
+From you I learned how to dismiss my thoughts and feelings, now it's affecting me more than ever. It is a shame but I am still learning how to raise my confidence a bit to function as a person. For a doctor, must love the people they heal. I sometimes hope I had never been.
 
-This is where your actual letter goes. You can write as much as you want.
-
-— me`
+— Chiki`
   },
   {
     person: "PERSON 03",
