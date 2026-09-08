@@ -1,0 +1,478 @@
+:root{
+  --bg:#0b0b0b;
+  --panel:#151515;
+  --line:#393939;
+  --white:#eee;
+  --muted:#858585;
+  --paper:#dedbd2;
+  --ink:#151515;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,#292929 0,#111 36%,#0b0b0b 75%);
+  color:var(--white);
+  font-family:"Courier Prime","Courier New",monospace;
+}
+
+body.modal-open{overflow:hidden}
+
+.grain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.075;
+  z-index:100;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+  mix-blend-mode:screen;
+}
+
+main{
+  width:min(1120px,92vw);
+  margin:auto;
+  padding:8vh 0 5vh;
+}
+
+header{text-align:center}
+
+.eyebrow{
+  margin:0 0 15px;
+  color:#8e8e8e;
+  letter-spacing:.18em;
+  font-size:.7rem;
+}
+
+h1,h2{
+  font-family:"Special Elite","Courier New",monospace;
+  font-weight:400;
+}
+
+h1{
+  margin:0;
+  font-size:clamp(3.1rem,9vw,6.8rem);
+  letter-spacing:-.055em;
+  text-transform:lowercase;
+}
+
+.subtitle{
+  color:#aaa;
+  margin:12px auto 28px;
+  max-width:620px;
+  line-height:1.7;
+  font-size:.85rem;
+}
+
+.rule{
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--line),transparent);
+}
+
+.archive-tools{
+  margin:26px auto 36px;
+  max-width:650px;
+  text-align:left;
+}
+
+.search-wrap{
+  display:block;
+  border:1px solid #363636;
+  background:rgba(10,10,10,.7);
+  padding:12px 15px 10px;
+  transition:border-color .2s,box-shadow .2s;
+}
+
+.search-wrap:focus-within{
+  border-color:#777;
+  box-shadow:0 0 0 2px rgba(255,255,255,.025);
+}
+
+.search-wrap span{
+  display:block;
+  color:#727272;
+  font-size:.62rem;
+  letter-spacing:.16em;
+  margin-bottom:7px;
+}
+
+.search-wrap input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#eee;
+  font:inherit;
+  font-size:.9rem;
+}
+
+.search-wrap input::placeholder{color:#4e4e4e}
+
+.archive-count{
+  margin:10px 0 0;
+  color:#666;
+  font-size:.67rem;
+  text-align:right;
+  letter-spacing:.08em;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
+
+.card{
+  position:relative;
+  min-height:185px;
+  padding:25px 23px;
+  border:1px solid #292929;
+  background:linear-gradient(145deg,#181818,#101010);
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .25s,border-color .25s,background .25s;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.035),transparent 65%);
+  transform:translateX(-120%);
+  transition:transform .7s;
+}
+
+.card:hover{
+  transform:translateY(-4px) rotate(-.25deg);
+  border-color:#505050;
+  background:#171717;
+}
+
+.card:hover:before{transform:translateX(120%)}
+
+.card-number{
+  color:#666;
+  font-size:.67rem;
+  letter-spacing:.1em;
+}
+
+.card h3{
+  margin:25px 0 12px;
+  font-family:"Special Elite","Courier New",monospace;
+  font-weight:400;
+  font-size:1.3rem;
+  color:#e7e7e7;
+}
+
+.card p{
+  margin:0;
+  color:#777;
+  font-size:.72rem;
+  line-height:1.6;
+}
+
+.card .card-song{
+  position:absolute;
+  bottom:19px;
+  left:23px;
+  right:23px;
+  color:#5c5c5c;
+  font-size:.62rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.empty-state{
+  text-align:center;
+  color:#666;
+  padding:60px 0;
+  font-size:.8rem;
+}
+
+footer{
+  margin-top:55px;
+  text-align:center;
+  color:#555;
+  font-size:.68rem;
+  letter-spacing:.04em;
+}
+
+/* Modal — the letter is always centered in the viewport */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100vw;
+  height:100dvh;
+  padding:clamp(16px,4vh,42px) clamp(12px,4vw,42px);
+  box-sizing:border-box;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .25s ease,visibility .25s ease;
+}
+
+.modal.show{
+  visibility:visible;
+  opacity:1;
+}
+
+.backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(6px);
+}
+
+/* The actual sheet. The previous build had the variation classes but
+   was missing this base rule, which made the paper effectively invisible. */
+.paper{
+  position:relative;
+  z-index:2;
+  width:min(760px,90vw);
+  max-height:88dvh;
+  overflow:auto;
+  margin:0;
+  box-sizing:border-box;
+  flex:0 1 760px;
+  padding:52px 56px 42px;
+  border:1px solid rgba(45,43,40,.25);
+  color:#191919;
+  background:#dedbd2;
+  box-shadow:0 28px 90px rgba(0,0,0,.72),0 4px 14px rgba(0,0,0,.3);
+  opacity:0;
+  transform:translateY(14px) scale(.985) rotate(var(--paper-tilt,0deg));
+  transition:opacity .3s ease,transform .38s cubic-bezier(.2,.75,.25,1);
+  scrollbar-width:thin;
+}
+.paper.visible{opacity:1;transform:translateY(0) scale(1) rotate(var(--paper-tilt,0deg))}
+.paper::-webkit-scrollbar{width:7px}
+.paper::-webkit-scrollbar-thumb{background:rgba(40,40,40,.22)}
+.paper::before,.paper::after{content:"";position:absolute;pointer-events:none;z-index:0}
+.paper::before{inset:0}
+.paper::after{inset:10px;border:1px solid rgba(50,50,50,.12)}
+.paper > *{position:relative;z-index:1}
+.paper-5,.paper-12,.paper-16{color:#eeeae2}
+.paper-5 h2,.paper-12 h2,.paper-16 h2,.paper-5 .letter,.paper-12 .letter,.paper-16 .letter{color:#eeeae2}
+
+/* =====================================================
+   PAPER VARIATIONS
+   Eighteen muted, distressed papers. They deliberately
+   stay desaturated so the archive keeps its literary mood.
+   ===================================================== */
+.paper-0{--paper-tilt:-.25deg;background:repeating-linear-gradient(0deg,rgba(70,65,58,.035) 0 1px,transparent 1px 5px),linear-gradient(135deg,#e6e2d9,#d8d4ca 55%,#e1ddd4)}
+.paper-1{--paper-tilt:.35deg;background:radial-gradient(ellipse at 12% 15%,rgba(90,75,55,.25),transparent 24%),radial-gradient(ellipse at 88% 80%,rgba(80,70,55,.18),transparent 25%),linear-gradient(120deg,#d5d0c5,#e4dfd4 48%,#d0cabf)}
+.paper-2{--paper-tilt:-.5deg;background:radial-gradient(ellipse at 0% 0%,#4b4741 0,rgba(75,71,65,.62) 5%,transparent 17%),radial-gradient(ellipse at 100% 100%,#504b44 0,rgba(80,75,68,.55) 5%,transparent 18%),linear-gradient(120deg,#d6d1c7,#e0dbd0 50%,#d2ccc1)}
+.paper-2::after{inset:5px;border:1px solid rgba(55,51,45,.32);box-shadow:inset 0 0 38px rgba(50,45,40,.18)}
+.paper-3{--paper-tilt:.55deg;background:repeating-linear-gradient(0deg,rgba(30,30,30,.07) 0 1px,transparent 1px 3px),linear-gradient(140deg,#cbc8c1,#dedbd4 50%,#c9c6be)}
+.paper-3::after{inset:13px;border:1px dashed rgba(55,55,55,.22)}
+.paper-4{--paper-tilt:-.7deg;clip-path:polygon(1% 2%,8% 1%,15% 2%,24% 1%,35% 2%,46% 1%,58% 2%,69% 1%,81% 2%,92% 1%,99% 3%,98% 15%,100% 27%,98% 40%,100% 53%,98% 68%,100% 82%,98% 98%,87% 97%,77% 99%,65% 97%,53% 99%,42% 97%,30% 99%,18% 97%,7% 99%,1% 96%,2% 84%,0% 71%,2% 58%,0% 45%,2% 31%,0% 18%);background:linear-gradient(125deg,#dedbd2,#cec9c0 48%,#e0dcd3)}
+.paper-5{--paper-tilt:.25deg;color:#eeeae2;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.07),transparent 20%),radial-gradient(circle at 80% 75%,rgba(0,0,0,.3),transparent 28%),linear-gradient(135deg,#3f4245,#55585b 52%,#383b3e);box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12)}
+.paper-5 .paperRule{background:rgba(240,237,229,.35)}.paper-5 .paperHead,.paper-5 .soundtrack p,.paper-5 .song span,.paper-5 small{color:#bbb9b4}.paper-5 .close{color:#ddd}
+.paper-6{--paper-tilt:-.2deg;background:repeating-linear-gradient(90deg,rgba(0,0,0,.035) 0 2px,transparent 2px 8px),linear-gradient(90deg,#c8c7c3,#e0dfda 42%,#c9c8c4);filter:contrast(.92)}
+.paper-6::after{inset:0;box-shadow:inset 0 0 70px rgba(0,0,0,.18)}
+.paper-7{--paper-tilt:.65deg;background:radial-gradient(ellipse at 8% 10%,rgba(25,25,25,.38),transparent 19%),radial-gradient(ellipse at 93% 18%,rgba(30,30,30,.2),transparent 17%),radial-gradient(ellipse at 15% 92%,rgba(25,25,25,.22),transparent 18%),linear-gradient(130deg,#dedbd4,#d1cec7 52%,#e2ded7)}
+.paper-8{--paper-tilt:-.4deg;background:radial-gradient(circle at 75% 18%,rgba(100,90,88,.15),transparent 25%),linear-gradient(120deg,#ddd7d3,#e8e2dd 50%,#d3ceca)}
+.paper-8::after{inset:16px;border:1px solid rgba(70,65,62,.16)}
+.paper-9{--paper-tilt:.75deg;background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(65,58,50,.22) 100%),radial-gradient(circle at 10% 90%,rgba(80,70,58,.25),transparent 18%),radial-gradient(circle at 90% 8%,rgba(80,70,58,.24),transparent 20%),linear-gradient(125deg,#cbc4b8,#ddd6ca 50%,#c8c0b4)}
+.paper-9::after{inset:8px;border:2px solid rgba(70,62,52,.18)}
+
+/* 11 — storm blue-gray */
+.paper-10{--paper-tilt:-.35deg;color:#20252a;background:radial-gradient(circle at 78% 20%,rgba(255,255,255,.12),transparent 25%),linear-gradient(125deg,#aeb7bb,#c4cbcd 52%,#9da8ad)}
+.paper-10::after{inset:12px;border:1px solid rgba(40,50,55,.22)}
+/* 12 — dusty rose-gray */
+.paper-11{--paper-tilt:.45deg;background:radial-gradient(circle at 18% 82%,rgba(116,82,83,.18),transparent 25%),linear-gradient(135deg,#c8bdbd,#ddd2d0 52%,#bdb1b1)}
+/* 13 — faded burgundy */
+.paper-12{--paper-tilt:-.6deg;color:#f0e8e3;background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.07),transparent 20%),linear-gradient(135deg,#4d383b,#604347 55%,#3f3033)}
+.paper-12 .paperRule{background:rgba(240,232,227,.3)}.paper-12 .paperHead,.paper-12 .soundtrack p,.paper-12 .song span,.paper-12 small{color:#c8bdbc}.paper-12 .close{color:#ddd2d0}
+/* 14 — moss gray */
+.paper-13{--paper-tilt:.25deg;background:radial-gradient(circle at 12% 18%,rgba(69,79,68,.16),transparent 22%),linear-gradient(120deg,#bdc2b9,#d7d9d0 48%,#b1b8ae)}
+/* 15 — dead lavender */
+.paper-14{--paper-tilt:-.3deg;background:radial-gradient(circle at 85% 80%,rgba(88,78,104,.14),transparent 25%),linear-gradient(135deg,#c1bec7,#d8d4dc 50%,#b8b4bf)}
+/* 16 — candle ivory */
+.paper-15{--paper-tilt:.5deg;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.2),transparent 35%),linear-gradient(125deg,#ded6bf,#eee6d0 50%,#d3c9b0)}
+/* 17 — ink-wash charcoal */
+.paper-16{--paper-tilt:-.75deg;color:#eee;background:radial-gradient(ellipse at 18% 10%,rgba(0,0,0,.35),transparent 25%),radial-gradient(ellipse at 90% 90%,rgba(255,255,255,.05),transparent 25%),linear-gradient(135deg,#555556,#686869 52%,#474748)}
+.paper-16 .paperRule{background:rgba(255,255,255,.25)}.paper-16 .paperHead,.paper-16 .soundtrack p,.paper-16 .song span,.paper-16 small{color:#bdbdbd}.paper-16 .close{color:#eee}
+/* 18 — newsprint */
+.paper-17{--paper-tilt:.2deg;background:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 4px),linear-gradient(115deg,#c6c4bd,#dedbd2 45%,#bebbb3);filter:grayscale(.75) contrast(.94)}
+.paper-17::after{inset:9px;border:1px dotted rgba(55,55,55,.2)}
+
+/* Universal paper grain */
+.paper::before{
+  opacity:.24;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(40,40,40,.05) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 7px),
+    radial-gradient(circle at 18% 20%,rgba(0,0,0,.09),transparent 22%),
+    radial-gradient(circle at 80% 75%,rgba(0,0,0,.07),transparent 25%);
+  mix-blend-mode:multiply;
+}
+
+.spotify-placeholder{
+  height:152px;
+  display:grid;
+  place-items:center;
+  color:#888;
+  font:12px 'Courier Prime',monospace;
+}
+
+.close{
+  position:absolute;
+  top:13px;
+  right:17px;
+  border:0;
+  background:none;
+  color:#454545;
+  font:2rem/1 "Courier New",monospace;
+  cursor:pointer;
+  z-index:3;
+}
+
+.paperHead{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  color:#777;
+  font-size:.62rem;
+  letter-spacing:.08em;
+}
+
+.paper h2{
+  margin:30px 0 17px;
+  font-size:2.2rem;
+}
+
+.paperRule{
+  height:1px;
+  background:#aaa59b;
+  margin-bottom:27px;
+}
+
+.letter{
+  white-space:pre-wrap;
+  line-height:1.85;
+  font-size:.88rem;
+}
+
+.soundtrack{
+  margin-top:38px;
+  padding-top:20px;
+  border-top:1px solid #aaa59b;
+}
+
+.soundtrack>p{
+  margin:0 0 11px;
+  color:#777;
+  font-size:.6rem;
+  letter-spacing:.17em;
+}
+
+.song{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:13px;
+}
+
+.song b{
+  display:block;
+  font-size:.83rem;
+}
+
+.song span{
+  display:block;
+  margin-top:3px;
+  color:#777;
+  font-size:.7rem;
+}
+
+.spotify-frame{
+  width:100%;
+  min-height:152px;
+  overflow:hidden;
+  background:#171717;
+  border-radius:12px;
+}
+
+.spotify-frame iframe{
+  display:block;
+  width:100%;
+  height:152px;
+  border:0;
+}
+
+.soundtrack small{
+  display:block;
+  margin-top:9px;
+  color:#777;
+  font-size:.61rem;
+  line-height:1.5;
+}
+
+.soundtrack code{
+  font-family:inherit;
+  color:#555;
+}
+
+/* Falling bond-paper pieces */
+.rain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:90;
+  overflow:hidden;
+}
+
+.confetti-paper{
+  position:absolute;
+  top:-100px;
+  width:58px;
+  height:78px;
+  background:#dedbd2;
+  border:1px solid rgba(30,30,30,.25);
+  box-shadow:0 5px 12px rgba(0,0,0,.18);
+  opacity:0;
+  animation:paperFall var(--fall-time) cubic-bezier(.15,.65,.25,1) forwards;
+}
+
+.confetti-paper:after{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px solid rgba(50,50,50,.09);
+}
+
+@keyframes paperFall{
+  0%{transform:translate3d(0,-110px,0) rotate(0deg);opacity:0}
+  8%{opacity:.88}
+  100%{transform:translate3d(var(--drift),110vh,0) rotate(var(--rotation));opacity:.05}
+}
+
+@media(max-width:1120px){
+  .site-layout{display:block}
+  .margin-notes{display:none}
+}
+
+
+@media(max-width:600px){
+  main{padding-top:6vh}
+  .grid{grid-template-columns:1fr}
+  .card{min-height:165px}
+  .paper{
+    max-height:91vh;
+    padding:46px 22px 28px;
+  }
+  .paper h2{font-size:1.8rem}
+  .letter{font-size:.82rem}
+  .spotify-frame iframe{height:152px}
+}
