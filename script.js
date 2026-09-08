@@ -92,20 +92,17 @@ This is where your actual letter goes. You can write as much as you want.
 — me`
   },
   {
-    person: "PERSON 06",
+    person: "Xiel",
     date: "SEPTEMBER 2026",
-    song: "SONG TITLE",
-    artist: "ARTIST NAME",
-    spotifyId: "PLACEHOLDER",
-    keywords: "person 06 placeholder letter",
-    preview: "A little preview of what this letter contains...",
-    text: `Dear Person 06,
+    song: "Museo",
+    artist: "Eliza Maturan",
+    spotifyId: "2dMQ4FbQcrEWVFK6NIFjrl",
+    keywords: "Handsome, Smart, Genius, Lawyer, JD, Polsci, Polsay, Judge Xiel, Judge",
+    preview: "I look up to you sm",
+    text: `Dear Xiel,
 
-[WRITE YOUR LETTER HERE]
-
-This is where your actual letter goes. You can write as much as you want.
-
-— me`
+I admire you so much smart guy. I cry when I read your letters na sobrang eloquent and well thought of. I hope you never lose the spark to write and serve the people. Judge Xiel, I have so much I wanna say to you but I don't have the words yet. Maybe I'll get to tell you gradually as time goes on. Go!! Our Pro bono lawyer!!
+— Cheng`
   },
   {
     person: "PERSON 07",
